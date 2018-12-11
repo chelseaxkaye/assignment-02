@@ -22,7 +22,7 @@ public class Hashtable {
 	public Hashtable() {
 		num_bucks = 20000;
 		size = 0;
-		buckets = new ArrayList();
+		buckets = new ArrayList<HashNode>(num_bucks);
 		for (int i = 0; i < num_bucks; i++)
 			buckets.add(null);
 	}
@@ -44,24 +44,13 @@ public class Hashtable {
 	}
 
 	public boolean containsKey(String k) {
-		String x = get(k);
-		if (x == null)
-			return false;
-		return true;
+		return get(k) != null;
 	}
 
 	public void put(String k, String v) {
 		int id = getBucket(k);
-		HashNode node = buckets.get(id);
-		// while (node != null) {
-		// 	if (node.key.equals(k)) {
-		// 		node.value = v;
-		// 		return;
-		// 	}
-		// 	node = node.next;
-		// }
 		HashNode head = new HashNode(k, v);
-		head.next = node;
+		head.next = buckets.get(id);
 		buckets.set(id, head);
 		size++;
 	}
